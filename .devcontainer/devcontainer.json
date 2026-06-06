@@ -1,0 +1,25 @@
+{
+    "name": "Terraform - Modules Development",
+    "image": "mcr.microsoft.com/devcontainers/base:trixie",
+    "initializeCommand": "sh .devcontainer/initialize.sh",
+    "postCreateCommand": "sh .devcontainer/post-create.sh",
+    "features": {
+        "ghcr.io/devcontainers/features/terraform:1": {
+            "version": "1.15.5",
+            "tflint": "0.63.1"
+        },
+        "ghcr.io/devcontainers/features/git:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "hashicorp.terraform"
+            ]
+        }
+    },
+    "mounts": [
+    ],
+    "remoteUser": "vscode",
+    "remoteEnv": {
+    }
+}
