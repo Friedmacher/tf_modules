@@ -3,6 +3,10 @@
     "image": "mcr.microsoft.com/devcontainers/base:trixie",
     "initializeCommand": "sh .devcontainer/initialize.sh",
     "postCreateCommand": "sh .devcontainer/post-create.sh",
+    "runArgs": [
+		"--env-file",
+		".devcontainer/devcontainer.env"
+	],
     "features": {
         "ghcr.io/devcontainers/features/terraform:1": {
             "version": "1.15.5",
@@ -15,7 +19,17 @@
             "extensions": [
                 "hashicorp.terraform"
             ]
+        },
+        "settings": {
+        "[terraform]": {
+          "editor.defaultFormatter": "hashicorp.terraform",
+          "editor.formatOnSave": true
+        },
+        "[terraform-vars]": {
+          "editor.defaultFormatter": "hashicorp.terraform",
+          "editor.formatOnSave": true
         }
+      }
     },
     "mounts": [
     ],
