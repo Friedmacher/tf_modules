@@ -12,8 +12,8 @@ locals {
   name                     = local.idp_name
   description              = "Identity provider for business users"
   origin                   = "sap.custom"
-  auto_create_shadow_users = TRUE
-  available_for_user_logon = TRUE
+  auto_create_shadow_users = true
+  available_for_user_logon = true
   domain                   = "Default"
   link_text                = "Identity provider for business users"
   status                   = "active"
