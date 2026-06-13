@@ -14,7 +14,7 @@ locals {
   origin                   = "custom.idp"
   auto_create_shadow_users = true
   available_for_user_logon = true
-  domain                   = "Default"
+#  domain                   = "Default"
   link_text                = "Identity provider for business users"
   status                   = "active"
 }
