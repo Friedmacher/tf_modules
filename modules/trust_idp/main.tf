@@ -10,7 +10,7 @@ locals {
   subaccount_id            = var.subaccount_id
   identity_provider        = local.idp_url
   name                     = local.idp_name
-  description              = "Identity provider for business users"
+  description              = "IAS tenant ${local.idp_name} (OpenID Connect)"
   origin                   = "custom.idp"
   auto_create_shadow_users = true
   available_for_user_logon = true
