@@ -11,7 +11,7 @@ locals {
   identity_provider        = local.idp_url
   name                     = local.idp_name
   description              = "Identity provider for business users"
-  origin                   = "sap.custom"
+  origin                   = "custom.idp"
   auto_create_shadow_users = true
   available_for_user_logon = true
   domain                   = "Default"
