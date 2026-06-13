@@ -1,6 +1,6 @@
 locals {
-  idp_url              = "${var.idp_host}.accounts.ondemand.com"
-  idp_name             = "${var.idp_host} (business users)"
+  idp_url              = "${var.btp_idp}.accounts.ondemand.com"
+  idp_name             = "${var.btp_idp} (business users)"
 }
 
 /*

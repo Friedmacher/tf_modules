@@ -7,7 +7,7 @@ variable "subaccount_id" {
   }
 }
 
-variable "idp_host" {
+variable "btp_idp" {
   description = "Host of the Identity Provider (IdP) to be trusted."
   type        = string
   validation {
