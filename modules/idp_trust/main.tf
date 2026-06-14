@@ -7,9 +7,9 @@ locals {
  * Establish trust to SAP Cloud Identity Provider (IDP)
  */
 resource "btp_subaccount_trust_configuration" "create_trust" {
-  subaccount_id            = var.subaccount_id
-  identity_provider        = var.btp_idp
-  name                     = local.idp_name
+  subaccount_id     = var.subaccount_id
+  identity_provider = var.btp_idp
+  name              = local.idp_name
   #description              = "IAS tenant ${local.idp_host} (OpenID Connect)"
   origin                   = "custom.idp"
   auto_create_shadow_users = true
@@ -25,6 +25,7 @@ resource "btp_subaccount_trust_configuration" "create_trust" {
 resource "btp_subaccount_security_settings" "change_default_idp" {
   subaccount_id             = var.subaccount_id
   default_identity_provider = "custom.idp"
+  depends_on                = [btp_subaccount_trust_configuration.create_trust]
 }
 
 
