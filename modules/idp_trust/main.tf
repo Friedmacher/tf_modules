@@ -23,8 +23,8 @@ resource "btp_subaccount_trust_configuration" "create_trust" {
   This is required to avoid that users can logon with their SAP S-User credentials, which are not managed in IAS
  */
 resource "btp_subaccount_security_settings" "change_default_idp" {
-  subaccount_id                        = var.subaccount_id
-  default_idp_available_for_user_logon = false
+  subaccount_id             = var.subaccount_id
+  default_identity_provider = "custom.idp"
 }
 
 
