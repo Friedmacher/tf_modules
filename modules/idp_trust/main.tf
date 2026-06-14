@@ -10,7 +10,7 @@ resource "btp_subaccount_trust_configuration" "create_trust" {
   subaccount_id            = var.subaccount_id
   identity_provider        = var.btp_idp
   name                     = local.idp_name
-  description              = "IAS tenant ${local.idp_host} (OpenID Connect)"
+  #description              = "IAS tenant ${local.idp_host} (OpenID Connect)"
   origin                   = "custom.idp"
   auto_create_shadow_users = true
   available_for_user_logon = true
