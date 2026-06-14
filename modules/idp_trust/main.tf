@@ -1,6 +1,6 @@
 locals {
   idp_host = split(".", var.btp_idp)[0]
-  idp_name = "${idp_host} (business users)"
+  idp_name = "${local.idp_host} (business users)"
 }
 
 /*
