@@ -27,7 +27,7 @@ import {
 }
 resource "btp_subaccount_trust_configuration" "default_idp" {
   subaccount_id            = var.subaccount_id
-  origin                   = "sap.default"
+  identity_provider        = "sap.default"
   available_for_user_logon = false
 }
 resource "btp_subaccount_security_settings" "change_default_idp" {
