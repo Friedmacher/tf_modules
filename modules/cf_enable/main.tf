@@ -24,15 +24,3 @@ resource "btp_subaccount_environment_instance" "cloudfoundry" {
     instance_name = local.cf_org
   })
 }
-
-resource "cloudfoundry_org_role" "org_user" {
-  username = "manuel.friedmacher@sap.com"
-  type     = "organization_user"
-  org      = btp_subaccount_environment_instance.cloudfoundry.platform_id
-}
-
-resource "cloudfoundry_org_role" "org_manager" {
-  username = "manuel.friedmacher@sap.com"
-  type     = "organization_manager"
-  org      = btp_subaccount_environment_instance.cloudfoundry.platform_id
-}
