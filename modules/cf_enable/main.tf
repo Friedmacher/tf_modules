@@ -28,11 +28,11 @@ resource "btp_subaccount_environment_instance" "cloudfoundry" {
 resource "cloudfoundry_org_role" "org_user" {
   username = "manuel.friedmacher@sap.com"
   type     = "organization_user"
-  org      = var.cf_org_id #btp_subaccount_environment_instance.cloudfoundry.platform_id
+  org      = btp_subaccount_environment_instance.cloudfoundry.platform_id
 }
 
 resource "cloudfoundry_org_role" "org_manager" {
   username = "manuel.friedmacher@sap.com"
   type     = "organization_manager"
-  org      = var.cf_org_id #btp_subaccount_environment_instance.cloudfoundry.platform_id
+  org      = btp_subaccount_environment_instance.cloudfoundry.platform_id
 }
