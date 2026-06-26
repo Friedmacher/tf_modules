@@ -16,7 +16,7 @@ resource "btp_subaccount_entitlement" "cf_runtime" {
   subaccount_id = var.subaccount_id
   service_name  = "APPLICATION_RUNTIME"
   plan_name     = "MEMORY"
-  amount        = 2
+  amount        = 1
 }
 
 resource "btp_subaccount_environment_instance" "cloudfoundry" {
