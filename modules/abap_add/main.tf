@@ -40,10 +40,14 @@ resource "btp_subaccount_subscription" "abap_web_access" {
 /*
  *  Create a service instance for the ABAP system
  */
+data "cloudfoundry_service_plan" "abap_plan" {
+  service_offering_name = "abap"
+  name                  = "standard"
+}
 resource "cloudfoundry_service_instance" "abap_env" {
   name         = "abap-${trimspace(upper(var.abap_sid))}"
   space        = var.cf_space_id
-  service_plan = "standard"
+  service_plan = data.cloudfoundry_service_plan.abap_plan.id
   type         = "managed"
   depends_on = [
     btp_subaccount_entitlement.abap__service_instance_plan,
