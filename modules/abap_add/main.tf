@@ -92,9 +92,9 @@ resource "cloudfoundry_service_instance" "abap_system" {
  *  Create a service key for the ABAP system
  */
 resource "btp_subaccount_service_binding" "abap_binding" {
-  subaccount_id           = var.subaccount_id
-  name                    = "sk_${var.abap_sid}"
-  environment_instance_id = btp_subaccount_environment_instance.abap_env.id
+  subaccount_id       = var.subaccount_id
+  name                = "sk_${var.abap_sid}"
+  service_instance_id = btp_subaccount_environment_instance.abap_env.id
 }
 /*
 resource "cloudfoundry_service_credential_binding" "abap_adt_key" {
