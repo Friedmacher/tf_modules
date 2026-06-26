@@ -40,6 +40,25 @@ resource "btp_subaccount_subscription" "abap_web_access" {
 /*
  *  Create a service instance for the ABAP system
  */
+resource "btp_subaccount_environment_instance" "abap_env" {
+  subaccount_id    = var.subaccount_id
+  name             = "abap-${var.abap_sid}"
+  environment_type = "sapbtp"
+  service_name     = "abap"
+  plan_name        = "standard"
+  parameters = jsonencode({
+    admin_email              = "${var.abap_admin_email}"
+    is_development_allowed   = "${var.abap_is_development_allowed}"
+    sapsystemname            = "${var.abap_sid}"
+    size_of_runtime          = 1
+    size_of_persistence      = 2
+    size_of_persistence_disk = "auto"
+    login_attribute          = "email"
+  })
+}
+
+
+/*
 data "cloudfoundry_service_plan" "abap_service_plan" {
   name                  = "standard"
   service_offering_name = "abap"
@@ -67,12 +86,20 @@ resource "cloudfoundry_service_instance" "abap_system" {
     update = "2h"
   }
 }
+*/
 
 /*
  *  Create a service key for the ABAP system
  */
+resource "btp_subaccount_service_binding" "abap_binding" {
+  subaccount_id           = var.subaccount_id
+  name                    = "sk_${var.abap_sid}"
+  environment_instance_id = btp_subaccount_environment_instance.abap_env.id
+}
+/*
 resource "cloudfoundry_service_credential_binding" "abap_adt_key" {
   type             = "key"
   name             = "sk_${var.abap_sid}"
   service_instance = cloudfoundry_service_instance.abap_system.id
 }
+*/
