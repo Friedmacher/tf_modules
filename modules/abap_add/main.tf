@@ -42,65 +42,31 @@ resource "btp_subaccount_subscription" "abap_web_access" {
  */
 resource "btp_subaccount_environment_instance" "abap_env" {
   subaccount_id    = var.subaccount_id
-  name             = "abap-${var.abap_sid}"
+  name             = "abap-${trimspace(upper(var.abap_sid))}"
   environment_type = "sapbtp"
   service_name     = "abap"
   plan_name        = "standard"
   landscape_label  = startswith(var.cf_region, "cf-") ? var.cf_region : "cf-${var.cf_region}"
+  depends_on = [
+    btp_subaccount_entitlement.abap__service_instance_plan,
+    btp_subaccount_entitlement.abap__abap_compute_unit,
+    btp_subaccount_entitlement.abap__hana_compute_unit
+  ]
   parameters = jsonencode({
-    instance_name          = "abap-${var.abap_sid}"
+    instance_name          = "abap-${trimspace(upper(var.abap_sid))}"
+    sapsystemname          = trimspace(upper(var.abap_sid))
     admin_email            = var.abap_admin_email
+    admin_user_name        = var.abap_admin_email
     is_development_allowed = tobool(var.abap_is_development_allowed)
-    sapsystemname          = upper(var.abap_sid)
-    size_of_runtime        = 1
-    size_of_persistence    = 2
     login_attribute        = "email"
   })
 }
-
-
-/*
-data "cloudfoundry_service_plan" "abap_service_plan" {
-  name                  = "standard"
-  service_offering_name = "abap"
-}
-
-resource "cloudfoundry_service_instance" "abap_system" {
-  name         = "abap-${var.abap_sid}"
-  type         = "managed"
-  space        = var.cf_space_id
-  service_plan = data.cloudfoundry_service_plan.abap_service_plan.id
-  parameters   = <<EOT
-  {
-    admin_email              = "${var.abap_admin_email}"
-    is_development_allowed   = "${var.abap_is_development_allowed}"
-    sapsystemname            = "${var.abap_sid}"
-    size_of_runtime          = 1
-    size_of_persistence      = 2
-    size_of_persistence_disk = "auto"
-    login_attribute          = "email"
-  }
-  EOT
-  timeouts = {
-    create = "2h"
-    delete = "2h"
-    update = "2h"
-  }
-}
-*/
 
 /*
  *  Create a service key for the ABAP system
  */
 resource "btp_subaccount_service_binding" "abap_binding" {
-  subaccount_id       = var.subaccount_id
-  name                = "sk_${var.abap_sid}"
-  service_instance_id = btp_subaccount_environment_instance.abap_env.id
+  subaccount_id           = var.subaccount_id
+  name                    = "sk_${trimspace(upper(var.abap_sid))}"
+  environment_instance_id = btp_subaccount_environment_instance.abap_env.id
 }
-/*
-resource "cloudfoundry_service_credential_binding" "abap_adt_key" {
-  type             = "key"
-  name             = "sk_${var.abap_sid}"
-  service_instance = cloudfoundry_service_instance.abap_system.id
-}
-*/
