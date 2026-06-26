@@ -53,14 +53,11 @@ resource "btp_subaccount_environment_instance" "abap_env" {
     btp_subaccount_entitlement.abap__hana_compute_unit
   ]
   parameters = jsonencode({
-    values = {
-      instance_name          = "abap-${trimspace(upper(var.abap_sid))}"
-      sapsystemname          = trimspace(upper(var.abap_sid))
-      admin_email            = var.abap_admin_email
-      admin_user_name        = var.abap_admin_email
-      is_development_allowed = tobool(var.abap_is_development_allowed)
-      login_attribute        = "email"
-    }
+    instance_name          = "abap-${trimspace(upper(var.abap_sid))}"
+    sapsystemname          = trimspace(upper(var.abap_sid))
+    admin_emails           = [var.abap_admin_email]
+    is_development_allowed = tobool(var.abap_is_development_allowed)
+    login_attribute        = "email"
   })
 }
 
