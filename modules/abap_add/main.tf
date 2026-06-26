@@ -40,16 +40,16 @@ resource "btp_subaccount_subscription" "abap_web_access" {
 /*
  *  Create a service instance for the ABAP system
  */
-data "cloudfoundry_service" "abap_service_plans" {
-  name       = "abap"
-  depends_on = [time_sleep.wait_a_few_seconds]
+data "cloudfoundry_service_plan" "abap_service_plan" {
+  name                  = "standard"
+  service_offering_name = "abap"
 }
 
 resource "cloudfoundry_service_instance" "abap_system" {
   name         = "abap-${var.abap_sid}"
   type         = "managed"
   space        = var.cf_space_id
-  service_plan = data.cloudfoundry_service.abap_service_plans.service_plans["standard"]
+  service_plan = data.cloudfoundry_service_plan.abap_service_plan.id
   parameters   = <<EOT
   {
     admin_email              = "${var.abap_admin_email}"
