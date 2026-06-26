@@ -66,7 +66,7 @@ resource "btp_subaccount_environment_instance" "abap_env" {
  *  Create a service key for the ABAP system
  */
 resource "btp_subaccount_service_binding" "abap_binding" {
-  subaccount_id           = var.subaccount_id
-  name                    = "sk_${trimspace(upper(var.abap_sid))}"
-  environment_instance_id = btp_subaccount_environment_instance.abap_env.id
+  subaccount_id       = var.subaccount_id
+  name                = "sk_${trimspace(upper(var.abap_sid))}"
+  service_instance_id = btp_subaccount_environment_instance.abap_env.id
 }
