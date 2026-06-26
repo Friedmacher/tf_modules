@@ -46,6 +46,7 @@ resource "btp_subaccount_environment_instance" "abap_env" {
   environment_type = "sapbtp"
   service_name     = "abap"
   plan_name        = "standard"
+  landscape_label  = var.cf_region
   parameters = jsonencode({
     admin_email              = "${var.abap_admin_email}"
     is_development_allowed   = "${var.abap_is_development_allowed}"

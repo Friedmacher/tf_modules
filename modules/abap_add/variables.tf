@@ -16,6 +16,15 @@ variable "cf_space_id" {
   }
 }
 
+variable "cf_region" {
+  description = "Region where the cloud foundry instance shall be created in."
+  type        = string
+  validation {
+    condition     = contains(["cf-eu10-005"], var.cf_region)
+    error_message = "The region of the subaccount must be one of: eu10-005."
+  }
+}
+
 variable "abap_sid" {
   type        = string
   description = "The system ID (SID) of the ABAP system."
