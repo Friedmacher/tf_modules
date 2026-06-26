@@ -12,6 +12,12 @@ resource "btp_subaccount_entitlement" "cloud_foundry" {
   service_name  = "cloudfoundry"
   plan_name     = "standard"
 }
+resource "btp_subaccount_entitlement" "cf_runtime" {
+  subaccount_id = var.subaccount_id
+  service_name  = "APPLICATION_RUNTIME"
+  plan_name     = "MEMORY"
+  amount        = 2
+}
 
 resource "btp_subaccount_environment_instance" "cloudfoundry" {
   subaccount_id    = var.subaccount_id
