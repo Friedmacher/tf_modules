@@ -44,6 +44,7 @@ resource "cloudfoundry_service_instance" "abap_env" {
   name         = "abap-${trimspace(upper(var.abap_sid))}"
   space        = var.cf_space_id
   service_plan = "standard"
+  type         = "managed"
   depends_on = [
     btp_subaccount_entitlement.abap__service_instance_plan,
     btp_subaccount_entitlement.abap__abap_compute_unit,
@@ -84,5 +85,5 @@ resource "btp_subaccount_environment_instance" "abap_env" {
 resource "btp_subaccount_service_binding" "abap_binding" {
   subaccount_id       = var.subaccount_id
   name                = "sk_${trimspace(upper(var.abap_sid))}"
-  service_instance_id = btp_subaccount_environment_instance.abap_env.id
+  service_instance_id = cloudfoundry_service_instance.abap_env.id
 }
