@@ -46,16 +46,15 @@ resource "btp_subaccount_environment_instance" "abap_env" {
   environment_type = "sapbtp"
   service_name     = "abap"
   plan_name        = "standard"
-  landscape_label  = var.cf_region
+  landscape_label  = startswith(var.cf_region, "cf-") ? var.cf_region : "cf-${var.cf_region}"
   parameters = jsonencode({
-    instance_name            = "abap-${var.abap_sid}"
-    admin_email              = var.abap_admin_email
-    is_development_allowed   = var.abap_is_development_allowed
-    sapsystemname            = var.abap_sid
-    size_of_runtime          = 1
-    size_of_persistence      = 2
-    size_of_persistence_disk = "auto"
-    login_attribute          = "email"
+    instance_name          = "abap-${var.abap_sid}"
+    admin_email            = var.abap_admin_email
+    is_development_allowed = tobool(var.abap_is_development_allowed)
+    sapsystemname          = upper(var.abap_sid)
+    size_of_runtime        = 1
+    size_of_persistence    = 2
+    login_attribute        = "email"
   })
 }
 
