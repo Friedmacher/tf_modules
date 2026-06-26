@@ -58,6 +58,8 @@ resource "cloudfoundry_service_instance" "abap_env" {
     admin_email            = var.abap_admin_email
     sapsystemname          = trimspace(upper(var.abap_sid))
     is_development_allowed = tobool(var.abap_is_development_allowed)
+    size_of_runtime        = 1
+    size_of_persistence    = 2
   })
 }
 /*
