@@ -61,30 +61,12 @@ resource "cloudfoundry_service_instance" "abap_env" {
     size_of_runtime        = 1
     size_of_persistence    = 2
   })
+  timeouts = {
+    create = "2h"
+    delete = "2h"
+    update = "2h"
+  }
 }
-/*
-resource "btp_subaccount_environment_instance" "abap_env" {
-  subaccount_id    = var.subaccount_id
-  name             = "abap-${trimspace(upper(var.abap_sid))}"
-  environment_type = "sapbtp"
-  service_name     = "abap"
-  plan_name        = "standard"
-  landscape_label  = startswith(var.cf_region, "cf-") ? var.cf_region : "cf-${var.cf_region}"
-  depends_on = [
-    btp_subaccount_entitlement.abap__service_instance_plan,
-    btp_subaccount_entitlement.abap__abap_compute_unit,
-    btp_subaccount_entitlement.abap__hana_compute_unit
-  ]
-  parameters = jsonencode({
-    instance_name          = "abap-${trimspace(upper(var.abap_sid))}"
-    sapsystemname          = trimspace(upper(var.abap_sid))
-    admin_emails           = [var.abap_admin_email]
-    is_development_allowed = tobool(var.abap_is_development_allowed)
-    login_attribute        = "email"
-  })
-}
-*/
-
 /*
  *  Create a service key for the ABAP system
  */

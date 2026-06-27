@@ -4,6 +4,7 @@ output "abap_dashboard_url" {
 }
 
 output "abap_service_key" {
-  value     = btp_subaccount_service_binding.abap_binding.credentials
-  sensitive = true
+  value       = btp_subaccount_service_binding.abap_binding.credentials
+  description = "The credentials of the ABAP service instance."
+  sensitive   = true
 }
