@@ -1,5 +1,5 @@
 variable "subaccount_id" {
-  description = "ID of the subaccount to be trusted."
+  description = "The ID of the subaccount where the ABAP system will be deployed."
   type        = string
   validation {
     condition     = can(regex("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", var.subaccount_id))

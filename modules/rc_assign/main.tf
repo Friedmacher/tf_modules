@@ -5,12 +5,12 @@ resource "btp_subaccount_role_collection_assignment" "sa_administrators" {
   subaccount_id        = var.subaccount_id
   origin               = var.btp_platform_idp
   role_collection_name = "Subaccount Administrator"
-  group_name           = "sa-administrators"
+  group_name           = "sa_administrators"
 }
 
 resource "btp_subaccount_role_collection_assignment" "sa_viewers" {
   subaccount_id        = var.subaccount_id
   origin               = var.btp_platform_idp
   role_collection_name = "Subaccount Viewer"
-  group_name           = "sa-viewers"
+  group_name           = "sa_viewers"
 }
