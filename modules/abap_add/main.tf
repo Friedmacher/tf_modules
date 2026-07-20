@@ -62,16 +62,18 @@ resource "cloudfoundry_service_instance" "abap_env" {
     size_of_persistence    = 2
   })
   timeouts = {
-    create = "2h"
-    delete = "2h"
-    update = "2h"
+    create = "4h"
+    delete = "4h"
+    update = "4h"
   }
 }
+
 /*
  *  Create a service key for the ABAP system
  */
-resource "btp_subaccount_service_binding" "abap_binding" {
-  subaccount_id       = var.subaccount_id
-  name                = "sk_${trimspace(upper(var.abap_sid))}"
-  service_instance_id = cloudfoundry_service_instance.abap_env.id
+# Create service key
+resource "cloudfoundry_service_credential_binding" "abap_service_key" {
+  type             = "key"
+  name             = join("_", ["sk", "abap", trimspace(upper(var.abap_sid))])
+  service_instance = cloudfoundry_service_instance.abap_env.id
 }

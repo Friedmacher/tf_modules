@@ -17,6 +17,7 @@ resource "btp_subaccount_entitlement" "task_center_entitlement" {
   plan_name     = "all-tasks"
 }
 
+
 # create a subscription to workzone
 resource "btp_subaccount_subscription" "workzone" {
   subaccount_id = var.subaccount_id
@@ -28,17 +29,6 @@ resource "btp_subaccount_subscription" "workzone" {
   ]
 }
 
-# create a subscription to task center
-resource "btp_subaccount_subscription" "task_center" {
-  subaccount_id = var.subaccount_id
-  app_name      = "one-inbox-service"
-  plan_name     = "all-tasks"
-  depends_on = [
-    btp_subaccount_entitlement.task_center_entitlement,
-    btp_subaccount_subscription.workzone
-  ]
-}
-
 # assign the Launchpad_Admin role collection to the wz_administrators group
 resource "btp_subaccount_role_collection_assignment" "wz_administrators" {
   subaccount_id        = var.subaccount_id
@@ -46,19 +36,54 @@ resource "btp_subaccount_role_collection_assignment" "wz_administrators" {
   role_collection_name = "Launchpad_Admin"
   group_name           = "wz_administrators"
   depends_on = [
-    btp_subaccount_subscription.workzone,
-    btp_subaccount_subscription.task_center
+    btp_subaccount_subscription.workzone
   ]
 }
 
-# create a service plan instance by plan and offering name
-resource "btp_subaccount_service_instance" "workzone_api" {
-  subaccount_id         = var.subaccount_id
-  serviceplan_name      = "standard"
+/*
+ *  Create a service instance for the task center
+ *  The task center service instance is required for the workzone service instance to be created successfully.
+ *  The task center service instance is created in the same Cloud Foundry space as the ABAP system.
+ */
+data "cloudfoundry_service_plan" "workzone_api_plan" {
   service_offering_name = "build-workzone-standard"
-  name                  = "workzone-api-cf"
+  name                  = "standard"
+}
+resource "cloudfoundry_service_instance" "workzone_api" {
+  name         = "workzone-api-cf"
+  space        = var.cf_space_id
+  service_plan = data.cloudfoundry_service_plan.workzone_api_plan.id
+  type         = "managed"
   depends_on = [
-    btp_subaccount_subscription.workzone,
-    btp_subaccount_subscription.task_center
+    btp_subaccount_subscription.workzone
   ]
+  timeouts = {
+    create = "1h"
+    delete = "1h"
+    update = "1h"
+  }
+}
+
+/*
+ *  Create a service instance for the task center
+ *  The task center service instance is required for the workzone service instance to be created successfully.
+ *  The task center service instance is created in the same Cloud Foundry space as the ABAP system.
+ */
+data "cloudfoundry_service_plan" "task_center_plan" {
+  service_offering_name = "one-inbox-service"
+  name                  = "all-tasks"
+}
+resource "cloudfoundry_service_instance" "task_center" {
+  name         = "taskcenter-cf"
+  space        = var.cf_space_id
+  service_plan = data.cloudfoundry_service_plan.task_center_plan.id
+  type         = "managed"
+  depends_on = [
+    btp_subaccount_subscription.workzone
+  ]
+  timeouts = {
+    create = "1h"
+    delete = "1h"
+    update = "1h"
+  }
 }
