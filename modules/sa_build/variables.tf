@@ -33,3 +33,21 @@ variable "parent_id" {
     error_message = "parent_id must be a valid UUID."
   }
 }
+
+variable "btp_platform_idp" {
+  description = "FQDN of the Platform Identity Provider."
+  type        = string
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9.-]+$", var.btp_platform_idp))
+    error_message = "btp_platform_idp must be a valid FQDN."
+  }
+}
+
+variable "btp_idp" {
+  description = "FQDN of the Identity Provider (IdP) to be trusted."
+  type        = string
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9.-]+$", var.btp_idp))
+    error_message = "btp_idp must be a valid FQDN."
+  }
+}

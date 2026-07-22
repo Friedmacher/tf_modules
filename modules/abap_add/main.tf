@@ -71,7 +71,6 @@ resource "cloudfoundry_service_instance" "abap_env" {
 /*
  *  Create a service key for the ABAP system
  */
-# Create service key
 resource "cloudfoundry_service_credential_binding" "abap_service_key" {
   type             = "key"
   name             = join("_", ["sk", "abap", trimspace(upper(var.abap_sid))])

@@ -6,5 +6,9 @@ terraform {
       source  = "SAP/btp"
       version = "~> 1.22.0"
     }
+    cloudfoundry = {
+      source  = "cloudfoundry/cloudfoundry"
+      version = "1.15.0"
+    }
   }
 }

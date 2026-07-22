@@ -1,6 +1,4 @@
-/*
- * Assign the Subaccount Administrator role collection to the sa-administrators group in the subaccount. This group is used for users who need administrative access to the subaccount, allowing them to manage resources and configurations within the subaccount effectively.
- */
+# Assign the Subaccount Administrator role collection to the sa_administrators group in the subaccount.
 resource "btp_subaccount_role_collection_assignment" "sa_administrators" {
   subaccount_id        = var.subaccount_id
   origin               = var.btp_platform_idp
@@ -8,6 +6,7 @@ resource "btp_subaccount_role_collection_assignment" "sa_administrators" {
   group_name           = "sa_administrators"
 }
 
+# Assign the Subaccount Viewer role collection to the sa_viewers group in the subaccount.
 resource "btp_subaccount_role_collection_assignment" "sa_viewers" {
   subaccount_id        = var.subaccount_id
   origin               = var.btp_platform_idp

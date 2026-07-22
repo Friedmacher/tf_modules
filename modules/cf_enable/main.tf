@@ -30,3 +30,17 @@ resource "btp_subaccount_environment_instance" "cloudfoundry" {
     instance_name = local.cf_org
   })
 }
+
+resource "cloudfoundry_org_role" "org_user" {
+  username = var.user_name
+  origin   = var.idp_origin
+  type     = "organization_user"
+  org      = btp_subaccount_environment_instance.cloudfoundry.platform_id
+}
+
+resource "cloudfoundry_org_role" "org_manager" {
+  username = var.user_name
+  origin   = var.idp_origin
+  type     = "organization_manager"
+  org      = btp_subaccount_environment_instance.cloudfoundry.platform_id
+}

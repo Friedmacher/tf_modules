@@ -16,11 +16,11 @@ variable "btp_platform_idp" {
   }
 }
 
-variable "cf_space_id" {
-  description = "The ID of the Cloud Foundry space where the ABAP system will be deployed."
+variable "cf_org_id" {
+  description = "ID of the Cloud Foundry organization."
   type        = string
   validation {
-    condition     = can(regex("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", var.cf_space_id))
-    error_message = "cf_space_id must be a valid UUID."
+    condition     = can(regex("^[a-zA-Z0-9._%+-]+$", var.cf_org_id))
+    error_message = "cf_org_id must be a valid Cloud Foundry organization ID."
   }
 }
