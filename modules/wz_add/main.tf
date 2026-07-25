@@ -47,6 +47,7 @@ resource "btp_subaccount_role_collection_assignment" "wz_administrators" {
 data "cloudfoundry_service_plan" "workzone_api_plan" {
   service_offering_name = "build-workzone-standard"
   name                  = "standard"
+  depends_on            = [btp_subaccount_entitlement.workzone_api_entitlement]
 }
 resource "cloudfoundry_service_instance" "workzone_api" {
   name         = "workzone-api-cf"
@@ -75,6 +76,7 @@ resource "cloudfoundry_service_credential_binding" "workzone_api_service_key" {
 data "cloudfoundry_service_plan" "task_center_plan" {
   service_offering_name = "one-inbox-service"
   name                  = "all-tasks"
+  depends_on            = [btp_subaccount_entitlement.task_center_entitlement]
 }
 resource "cloudfoundry_service_instance" "task_center" {
   name         = "taskcenter-cf"
