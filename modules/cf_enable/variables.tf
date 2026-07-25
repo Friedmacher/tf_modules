@@ -24,22 +24,3 @@ variable "cf_region" {
     error_message = "The region of the subaccount must be one of: cf-eu10-005."
   }
 }
-
-variable "user_name" {
-  description = "Name of the user to be added to the Cloud Foundry org."
-  type        = string
-  validation {
-    condition     = can(regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", var.user_name))
-    error_message = "user_name must be a valid email address."
-  }
-}
-
-variable "idp_origin" {
-  description = "Identity provider origin of the user to be added to the Cloud Foundry org."
-  type        = string
-  validation {
-    condition     = can(regex("^[a-zA-Z0-9._%+-]+$", var.idp_origin))
-    error_message = "idp_origin must be a valid identity provider origin."
-  }
-}
-

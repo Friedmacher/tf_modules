@@ -16,15 +16,6 @@ variable "idp_origin" {
   }
 }
 
-variable "cf_org_id" {
-  description = "ID of the Cloud Foundry organization."
-  type        = string
-  validation {
-    condition     = can(regex("^[a-zA-Z0-9._%+-]+$", var.cf_org_id))
-    error_message = "cf_org_id must be a valid Cloud Foundry organization ID."
-  }
-}
-
 variable "cf_space_id" {
   description = "ID of the Cloud Foundry space."
   type        = string

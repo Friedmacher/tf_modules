@@ -7,21 +7,21 @@ variable "project_name" {
   }
 }
 
-variable "stage" {
-  description = "Stage of the subaccount to be created."
-  type        = string
-  validation {
-    condition     = contains(["SBX", "DEV", "QAS", "PRD"], var.stage)
-    error_message = "Stage must be one of SBX, DEV, QAS or PRD."
-  }
-}
-
 variable "subaccount_region" {
   description = "Region where the subaccount shall be created in."
   type        = string
   validation {
     condition     = contains(["eu10", "eu11", "eu20", "eu22", "eu30", "eu31"], var.subaccount_region)
     error_message = "The region of the subaccount must be one of: eu10, eu11, eu20, eu22, eu30, eu31."
+  }
+}
+
+variable "stage" {
+  description = "Stage of the subaccount to be created."
+  type        = string
+  validation {
+    condition     = contains(["SBX", "DEV", "QAS", "PRD"], var.stage)
+    error_message = "Stage must be one of SBX, DEV, QAS or PRD."
   }
 }
 

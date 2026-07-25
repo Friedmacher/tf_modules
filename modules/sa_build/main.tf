@@ -34,7 +34,7 @@ resource "btp_subaccount_trust_configuration" "create_trust" {
   status                   = "active"
 }
 
-# Assign the Subaccount Administrator role collection to the sa_administrators group in the subaccount.
+# Assign the Subaccount Administrator role collection to the sa_administrators group in the subaccount
 resource "btp_subaccount_role_collection_assignment" "sa_administrators" {
   subaccount_id        = btp_subaccount.subaccount.id
   origin               = var.btp_platform_idp
@@ -42,7 +42,7 @@ resource "btp_subaccount_role_collection_assignment" "sa_administrators" {
   group_name           = "sa_administrators"
 }
 
-# Assign the Subaccount Viewer role collection to the sa_viewers group in the subaccount.
+# Assign the Subaccount Viewer role collection to the sa_viewers group in the subaccount
 resource "btp_subaccount_role_collection_assignment" "sa_viewers" {
   subaccount_id        = btp_subaccount.subaccount.id
   origin               = var.btp_platform_idp

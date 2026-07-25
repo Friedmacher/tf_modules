@@ -32,15 +32,6 @@ resource "btp_subaccount_subscription" "workzone" {
   ]
 }
 
-# Create a basic group in SAP Cloud Identity Services
-resource "sci_group" "basic_group" {
-  display_name = "Workzone Administrators"
-  group_extension = {
-    name        = "wz_administrators"
-    description = "Workzone Administrators group created by Terraform"
-  }
-}
-
 # Assign the Launchpad_Admin role collection to the wz_administrators group
 resource "btp_subaccount_role_collection_assignment" "wz_administrators" {
   subaccount_id        = var.subaccount_id
@@ -52,14 +43,14 @@ resource "btp_subaccount_role_collection_assignment" "wz_administrators" {
   ]
 }
 
-# Create a service instance for the task center
+# Create a service instance for the workzone API
 data "cloudfoundry_service_plan" "workzone_api_plan" {
   service_offering_name = "build-workzone-standard"
   name                  = "standard"
 }
 resource "cloudfoundry_service_instance" "workzone_api" {
   name         = "workzone-api-cf"
-  space        = cloudfoundry_space.space.id
+  space        = cloudfoundry_space.wz_space.id
   service_plan = data.cloudfoundry_service_plan.workzone_api_plan.id
   type         = "managed"
   depends_on = [
