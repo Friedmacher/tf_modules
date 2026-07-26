@@ -8,7 +8,7 @@
         ".devcontainer/devcontainer.env"
     ],
     "features": {
-        "ghcr.io/devcontainers/features/terraform:1": {}
+        "ghcr.io/devcontainers/features/terraform:1.4.4": {}
     },
     "customizations": {
         "vscode": {
