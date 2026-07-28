@@ -1,0 +1,42 @@
+name: Update Module Docs
+on:
+  repository_dispatch:
+    types: [module-released]
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Fetch gh-pages
+        run: git fetch origin gh-pages --depth=1 || true
+      - name: Pull latest module docs
+        run: |
+          MODULE="${{ github.event.client_payload.module }}"
+          VERSION="${{ github.event.client_payload.version }}"
+          git clone --depth=1 \
+            --branch "$VERSION" \
+            https://github.com/org/terraform-module-${MODULE}.git \
+            /tmp/module-${MODULE}
+          mkdir -p docs/modules/${MODULE}
+          cp /tmp/module-${MODULE}/README.md docs/modules/${MODULE}/index.md
+          if [ -d /tmp/module-${MODULE}/docs ]; then
+            cp -r /tmp/module-${MODULE}/docs/. docs/modules/${MODULE}/
+          fi
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Deploy new version with mike
+        run: |
+          VERSION="${{ github.event.client_payload.version }}"
+          mike deploy "$VERSION" latest --update-aliases --push
+          mike set-default latest --push

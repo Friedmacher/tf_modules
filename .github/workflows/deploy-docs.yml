@@ -1,0 +1,53 @@
+name: Build and Deploy Docs
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Docs version to deploy (e.g. v1.2.0)"
+        required: true
+      set_latest:
+        description: "Set as latest?"
+        type: boolean
+        default: true
+permissions:
+  contents: write   # mike needs to push to gh-pages
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # mike requires full history
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Fetch gh-pages history
+        run: git fetch origin gh-pages --depth=1 || true
+      - name: Clone module docs
+        run: |
+          for module in vpc eks rds; do
+            git clone --depth=1 \
+              https://github.com/org/terraform-module-${module}.git \
+              /tmp/module-${module}
+            mkdir -p docs/modules/${module}
+            cp /tmp/module-${module}/README.md docs/modules/${module}/index.md
+            # Copy any additional docs pages if they exist
+            if [ -d /tmp/module-${module}/docs ]; then
+              cp -r /tmp/module-${module}/docs/. docs/modules/${module}/
+            fi
+          done
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Deploy with mike
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          if [ "${{ github.event.inputs.set_latest }}" = "true" ]; then
+            mike deploy "$VERSION" latest --update-aliases --push
+            mike set-default latest --push
+          else
+            mike deploy "$VERSION" --push
+          fi

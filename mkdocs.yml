@@ -1,0 +1,24 @@
+site_name: Terraform Modules Docs
+repo_url: https://github.com/Friedmacher/tf_modules.git
+repo_name: Friedmacher/tf_modules
+docs_dir: docs
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  palette:
+    scheme: default
+extra:
+  version:
+    provider: mike
+    default: latest
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Modules:
+      - BTPSA: modules/build_sa/index.md
+      - BTPCF: modules/enable_cf/index.md
