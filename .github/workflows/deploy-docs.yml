@@ -40,8 +40,8 @@ jobs:
           done
       - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Friedmacher"
+          git config user.email "manuel.friedmacher@outlook.com"
       - name: Deploy with mike
         run: |
           VERSION="${{ github.event.inputs.version }}"
