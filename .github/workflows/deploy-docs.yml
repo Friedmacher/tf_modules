@@ -27,9 +27,9 @@ jobs:
         run: git fetch origin gh-pages --depth=1 || true
       - name: Clone module docs
         run: |
-          for module in vpc eks rds; do
+          for module in build_sa; do
             git clone --depth=1 \
-              https://github.com/org/terraform-module-${module}.git \
+              https://github.com/Friedmacher/tf_module-${module}.git \
               /tmp/module-${module}
             mkdir -p docs/modules/${module}
             cp /tmp/module-${module}/README.md docs/modules/${module}/index.md
