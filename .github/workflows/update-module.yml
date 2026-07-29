@@ -24,7 +24,7 @@ jobs:
           VERSION="${{ github.event.client_payload.version }}"
           git clone --depth=1 \
             --branch "$VERSION" \
-            https://github.com/Friedmacher/tf_module_${MODULE}.git \
+            https://github.com/manuel-friedmacher/tf_module_${MODULE}.git \
             /tmp/module-${MODULE}
           mkdir -p docs/modules/${MODULE}
           cp /tmp/module-${MODULE}/README.md docs/modules/${MODULE}/index.md
