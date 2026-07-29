@@ -29,7 +29,7 @@ jobs:
         run: |
           for module in build_sa; do
             git clone --depth=1 \
-              https://github.com/Friedmacher/tf_module_${module}.git \
+              https://github.com/manuel-friedmacher/tf_module_${module}.git \
               /tmp/module-${module}
             mkdir -p docs/modules/${module}
             cp /tmp/module-${module}/README.md docs/modules/${module}/index.md
